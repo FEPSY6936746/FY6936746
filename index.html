@@ -79,6 +79,11 @@ margin-left: 250px;
     <td><a href="#Design Challenges">Design Challenges</td>
 </tr>
 <tr>
+    <td><a href="#Environmental and Economic Advantages">Environmental and Economic Advantages</td>
+</tr>
+    <td><a href="#Recent Research and Industry Developments">Recent Research and Industry Developments</td>
+</tr>
+<tr>
     <td><a href="#References">References</td>
 </tr>
 
@@ -197,12 +202,19 @@ hr {
 <p> The process of accommodating hydrogen fuel provides many engineering obstacles. It has a low volumetric energy density which means it requires cryogenic (-253°C) or high-pressure storage. According to Dang et al. (2025) the connections between the
 storage tank and the piping, because of differing thermal expansion rates, poor assembly,
 high pressure, and the alternating stresses experienced during aircraft take-off and landing,
-can become loose. As a result, this area of the aircraft is more prone to significant hydrogen leakage compared with other regions of the tanks.
-    Here is an illustration taken from the study:<p>
+can become loose. As a result, this area of the aircraft is more prone to significant hydrogen leakage compared with other regions of the tanks. Here is an illustration taken from the study:<p>
 
   <img src="pipes.png" alt="Banner" width="400" height="200">
 
     <p> Unfortunately, airports currently lack the correct infrastructure to support large-scale implementation of hydrogen fueled aircraft. Substantial investment is needed to execute safe and regulated refueling networks, both in cost and complex planning. Also, current airport procedures would have to be modified. Another key concern is material compatibility, hydrogen can induce embrittlement in certain metals it would be crucial to introduce advanced alloys or protective coatings. Furthermore, precise management of heat,weight and aerodynamic efficiency must be standardised to ensure performance and safety standards are followed. <p>
+
+<h3 id="Environmental and Economic Advantages">Environmental and Economic Advantages</h3>
+
+<p> Hydrogen fuel has the ability to enable near-zero aviation when produced using sustainable manufacturing techniques to create green hydrogen. This is known as electrolysis, with electricty sources of solar panels, wind turbines and hydropower is used to power the process. As stated prior, hydrogen combustion's only waste product is water vapour (with minimal NOₓ), there is no particulate matter generated - which improves air quality and the absence of soot means there is no contribution to radiative forcing. Airbus representative, Llewellyn (2021) stated that hydrogen propulsion has the lowest cost per ton of CO₂ avoided compared to all other methods for decarbonizing air transportation. <p>
+
+<h3 id="Recent Research and Industry Developments">Recent Research and Industry Developments</h3>
+
+<p>
 
 <hr>
 
@@ -217,3 +229,89 @@ can become loose. As a result, this area of the aircraft is more prone to signif
 
    <p> Dang, X., Zhong, M., Jia, W., Yang, X., Liu, H., Shao, Y. & Yang, Z. (2025). Simulation Analysis of the Leakage and Diffusion Risk of a Hydrogen Storage System in Hydrogen Aircraft. Available at: <a href="https://www.mdpi.com/2226-4310/12/6/489"> https://www.mdpi.com/2226-4310/12/6/489 </a>
    (Accessed: 12 November 2025). <p> 
+   
+   <p> Llewellyn, G. (2023) ZeroAvia Hydrogen Aviation Summit 2021: Day 1. YouTube [online video]. Available at: <a href="https://www.youtube.com/watch?v=8oh5PfVtwz8&t=2327s"> https://www.youtube.com/watch?v=8oh5PfVtwz8&t=2327s </a> (Accessed: 17 November 2025).<p>
+
+<hr>
+
+<!-- //////////////////////////////////////////////////////////////////////////////// -->
+  <!-- ////////////////////////////// Adding last update ////////////////////////////// -->
+  <!-- //////////////////////////////////////////////////////////////////////////////// -->
+    <!-- Last commit time display -->
+<div id="last-updated">Loading last update time...</div>
+<!-- Verify Button -->
+<button onclick="verifyLastUpdatedTime()" style="display: block; margin: 10px auto; padding: 8px 16px;">
+    Verify Last Modified Time
+</button>
+<script>
+    async function getLastUpdatedTime() {
+        const username = 'nr0025';
+        const repo = 'FY0025';
+       
+        const url = `https://api.github.com/repos/${username}/${repo}/commits`;
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/vnd.github.v3+json',
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`Error fetching data: ${response.status} - ${response.statusText}`);
+            }
+            const commits = await response.json();
+            if (commits && commits.length > 0) {
+                const lastCommitDate = new Date(commits[0].commit.committer.date);
+               
+                // Displaying the time on load
+                document.getElementById('last-updated').innerText = `Last Modified Time: ${lastCommitDate.toLocaleString()}`;
+            } else {
+                document.getElementById('last-updated').innerText = 'No commits found in the repository.';
+            }
+        } catch (error) {
+            console.error('Error fetching the last updated time:', error);
+            document.getElementById('last-updated').innerText = 'Error fetching update time. Please check the repository details.';
+        }
+    }
+    // Function to verify the last update time by re-fetching it from the API
+    async function verifyLastUpdatedTime() {
+        document.getElementById('last-updated').innerText = 'Verifying...';
+        await getLastUpdatedTime();
+        alert("Last modified time has been successfully verified from GitHub API.");
+    }
+    // Initial load to display the time on page load
+    window.onload = getLastUpdatedTime;
+</script>
+
+
+ <!-- //////////////////////////////////////////////////////////////////////////////// -->
+  <!-- ////////////////////////////// Word count function ////////////////////////////// -->
+  <!-- //////////////////////////////////////////////////////////////////////////////// -->
+<!-- Placeholder for total word count -->
+<p id="totalWordCount"></p>
+<hr>
+<script>
+  // Function to calculate and display word count for a specified section
+  function displayWordCount(sectionId, outputId) {
+    // Get the text content from the specified section
+    const text = document.getElementById(sectionId).textContent;
+    // Split text into words based on spaces and filter out any empty strings
+    const wordArray = text.trim().split(/\s+/);
+    // Count the words
+    const wordCount = wordArray.length;
+    // Return the word count for summing purposes
+    return wordCount;
+  }
+  // Function to calculate and display total word count from selected sections
+  function displayTotalWordCount() {
+    // Calculate word count for each section and accumulate the total
+    const IntroductionCount = displayWordCount("Introduction_InText");
+    const AnalysisCount = displayWordCount("Analysis_InText");
+    // Calculate the sum of all selected sections
+    const totalWordCount = IntroductionCount + AnalysisCount;
+    // Display the total word count
+    document.getElementById("totalWordCount").innerText = `Total word count: ${totalWordCount}`;
+  }
+  // Run the function for specific sections and display total count when the page loads
+  window.onload = displayTotalWordCount;
+</script>
